@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
-@EnableWebSecurity
+@Configuration     // Indica ao Spring que esta classe contém definições de Beans e configurações da aplicação
+@EnableWebSecurity // Habilita a segurança web do Spring Security e integra as configurações com o Spring MVC
 public class ConfiguracaoSeguranca {
 
     @Bean // Registra este metodo como um Bean para o Spring Security reconhecer o serviço de usuários
@@ -49,6 +49,14 @@ public class ConfiguracaoSeguranca {
 
                         // Redireciona o usuário para a página inicial ("/") após realizar o login com sucesso
                         .defaultSuccessUrl("/")
+
+                        // Permite o acesso público e sem autenticação à página de login e ao endpoint do formulário
+                        .permitAll()
+                )
+                // Habilita e configura o encerramento de sessão (logout) do usuário
+                .logout(logout -> logout
+                        // Redireciona o usuário para a página de login com o parâmetro "?logout" na URL após deslogar com sucesso
+                        .logoutSuccessUrl("/login?logout")
 
                         // Permite o acesso público e sem autenticação à página de login e ao endpoint do formulário
                         .permitAll()
