@@ -2,6 +2,7 @@ package med.voll.web_application.infra.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -48,7 +49,7 @@ public class ConfiguracaoSeguranca {
                         .loginPage("/login")
 
                         // Redireciona o usuário para a página inicial ("/") após realizar o login com sucesso
-                        .defaultSuccessUrl("/")
+                        .defaultSuccessUrl("/", true)
 
                         // Permite o acesso público e sem autenticação à página de login e ao endpoint do formulário
                         .permitAll()
@@ -61,6 +62,20 @@ public class ConfiguracaoSeguranca {
                         // Permite o acesso público e sem autenticação à página de login e ao endpoint do formulário
                         .permitAll()
                 )
+
+                .rememberMe(rememberMe -> rememberMe
+                        // Define uma chave secreta exclusiva para assinar criptografadamente os tokens do Remember-Me
+                        .key("lembrarDeMim")
+
+                        // Força o sistema a sempre ativar a função de lembrar, ignorando o estado do checkbox
+                         .alwaysRemember(true)
+
+//                        // Define o tempo de validade do cookie de autenticação em segundos (1800 segundos = 30 minutos)
+//                        .tokenValiditySeconds(1800)
+                )
+
+                .csrf(Customizer.withDefaults())
+
                 // Constrói e retorna a cadeia de filtros de segurança configurada
                 .build();
     }
