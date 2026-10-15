@@ -2,6 +2,7 @@ package med.voll.web_application.infra.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -66,12 +67,14 @@ public class ConfiguracaoSeguranca {
                         // Define uma chave secreta exclusiva para assinar criptografadamente os tokens do Remember-Me
                         .key("lembrarDeMim")
 
-                        // (Comentado) Força o sistema a sempre ativar a função de lembrar, ignorando o estado do checkbox
-                        // .alwaysRemember(true)
+                        // Força o sistema a sempre ativar a função de lembrar, ignorando o estado do checkbox
+                         .alwaysRemember(true)
 
-                        // Define o tempo de validade do cookie de autenticação em segundos (1800 segundos = 30 minutos)
-                        .tokenValiditySeconds(1800)
+//                        // Define o tempo de validade do cookie de autenticação em segundos (1800 segundos = 30 minutos)
+//                        .tokenValiditySeconds(1800)
                 )
+
+                .csrf(Customizer.withDefaults())
 
                 // Constrói e retorna a cadeia de filtros de segurança configurada
                 .build();
