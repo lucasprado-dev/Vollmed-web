@@ -48,7 +48,7 @@ public class ConfiguracaoSeguranca {
                         .loginPage("/login")
 
                         // Redireciona o usuário para a página inicial ("/") após realizar o login com sucesso
-                        .defaultSuccessUrl("/")
+                        .defaultSuccessUrl("/", true)
 
                         // Permite o acesso público e sem autenticação à página de login e ao endpoint do formulário
                         .permitAll()
