@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -15,22 +17,22 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity // Habilita a segurança web do Spring Security e integra as configurações com o Spring MVC
 public class ConfiguracaoSeguranca {
 
-    @Bean // Registra este metodo como um Bean para o Spring Security reconhecer o serviço de usuários
-    public UserDetailsService dadosUsuariosCadastrado() {
-        // Cria o primeiro usuário com suas credenciais de acesso
-        UserDetails usuario1 = User.builder()
-                .username("lucas@vollmed.com") // Define o identificador/login do usuário
-                .password("{noop}lucas123")    // Senha em texto puro. O prefixo {noop} avisa o Spring para não exigir hash/criptografia
-                .build();                       // Constrói a instância de UserDetails do primeiro usuário
-
-        UserDetails usuario2 = User.builder()
-                .username("maria@vollmed.com")
-                .password("{noop}maria123")
-                .build();
-
-        // Retorna a implementação que armazena esses usuários na memória RAM (ideal para testes/desenvolvimento)
-        return new InMemoryUserDetailsManager(usuario1, usuario2);
-    }
+//    @Bean // Registra este metodo como um Bean para o Spring Security reconhecer o serviço de usuários
+//    public UserDetailsService dadosUsuariosCadastrado() {
+//        // Cria o primeiro usuário com suas credenciais de acesso
+//        UserDetails usuario1 = User.builder()
+//                .username("lucas@vollmed.com") // Define o identificador/login do usuário
+//                .password("{noop}lucas123")    // Senha em texto puro. O prefixo {noop} avisa o Spring para não exigir hash/criptografia
+//                .build();                       // Constrói a instância de UserDetails do primeiro usuário
+//
+//        UserDetails usuario2 = User.builder()
+//                .username("maria@vollmed.com")
+//                .password("{noop}maria123")
+//                .build();
+//
+//        // Retorna a implementação que armazena esses usuários na memória RAM (ideal para testes/desenvolvimento)
+//        return new InMemoryUserDetailsManager(usuario1, usuario2);
+//    }
 
     @Bean // Define o filtro de segurança do Spring Security como um Bean gerenciado
     public SecurityFilterChain filtroSeguranca(HttpSecurity http) throws Exception {
@@ -78,5 +80,10 @@ public class ConfiguracaoSeguranca {
 
                 // Constrói e retorna a cadeia de filtros de segurança configurada
                 .build();
+    }
+
+    @Bean
+    public PasswordEncoder codificadorSenha() {
+        return new BCryptPasswordEncoder();
     }
 }
