@@ -36,4 +36,7 @@ public class Usuario implements UserDetails {
         return email;
     }
 
+    public String getNome() {
+        return nome;
+    }
 }
