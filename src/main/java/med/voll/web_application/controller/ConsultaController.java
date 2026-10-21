@@ -43,7 +43,7 @@ public class ConsultaController {
         if (id != null) {
             model.addAttribute("dados", service.carregarPorId(id));
         } else {
-            model.addAttribute("dados", new DadosAgendamentoConsulta(null, null, "", null, null));
+            model.addAttribute("dados", new DadosAgendamentoConsulta(null, null, null, null, null));
         }
 
         return PAGINA_CADASTRO;
