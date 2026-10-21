@@ -37,7 +37,7 @@ public class PacienteController {
     }
 
     @GetMapping("formulario")
-    public String carregarPaginaCadastro(Long id, Model model) {
+    public String carregarPaginacaoCadastro(Long id, Model model) {
         if (id != null) {
             model.addAttribute("dados", service.carregarPorId(id));
         } else {
@@ -69,5 +69,4 @@ public class PacienteController {
         service.excluir(id);
         return REDIRECT_LISTAGEM;
     }
-
 }
